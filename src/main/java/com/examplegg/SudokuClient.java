@@ -175,31 +175,11 @@ public class SudokuClient {
         }
         outputln("2");
         printBoard(tmp);
-        String result = in.nextLine(); //result = in.nextLine();
-
+        String result = in.nextLine();
+        if(result.length() <= 1) result = in.nextLine();
+        System.out.println("Server result: " + result);
         return "Server result: " + result;
     }
-
-    /*public static void main(String[] args) {
-
-        try (Socket client = new Socket("127.0.0.1", 5757)) {
-            System.out.println("Connected to server.");
-            out = new PrintWriter(client.getOutputStream());
-            in = new Scanner(client.getInputStream());
-            getInput();
-            System.out.println("got input");
-            if (solve(board)) {
-                printBoard(board);
-            } else {
-                output("No solution\n");
-            }
-            String result = in.nextLine(); result = in.nextLine();
-            System.out.println("Server result: " + result);
-            endProgram();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 }
 /*
  * 8 0 0 0 0 0 0 0 0

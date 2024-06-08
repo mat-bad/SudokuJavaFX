@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -50,7 +51,7 @@ class SudokuHandler implements Runnable{
           for(int j=0; j<9; j++) {
             while(!scanner.hasNextInt()) {
                 //System.out.println("Waiting on client response...");
-                Thread.sleep(1000);
+                Thread.sleep(100);
             }
             board[i][j] = scanner.nextInt();
           }
@@ -152,15 +153,21 @@ class SudokuHandler implements Runnable{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        int operation;
         while(true) {
             if(!in.hasNextInt()) {
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     continue;
                 }
             }
-            int operation = in.nextInt();
+            try {
+                operation = in.nextInt();
+            } catch (NoSuchElementException e) {
+                System.out.println("Goodbye!");
+                return;
+            }
             if(operation == 1) {
                 System.out.println("op1");
                 printBoard(board);
@@ -174,10 +181,10 @@ class SudokuHandler implements Runnable{
                     e.printStackTrace();
                 }
                 if(validate(board, board2)) {
-                    out.println("Correct!");
+                    outputln("Correct!");
                     System.out.println("Correct!");
                 } else {
-                    out.println("Wrong answer");
+                    outputln("Wrong answer");
                     System.out.println("Wrong answer");
                 }
             } else if(operation == 3) {
